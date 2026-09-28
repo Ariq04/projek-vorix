@@ -6,7 +6,7 @@
 [![Google Gemini AI](https://img.shields.io/badge/Google_Gemini-2.5_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 
 > **💡 One-Liner Pitch:**  
-> *"An autonomous Web3 AI agent on BNB Chain that safeguards and optimizes your crypto assets 24/7—so you can sleep soundly at 3 AM."*
+> *"An agent can secure your assets while you sleep at 3am."*
 
 ---
 
