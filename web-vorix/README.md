@@ -78,6 +78,7 @@ All trades executed by VORIX are verifiable on **BscScan Testnet**:
 
 | Token Pair | Trade Type | Amount | BscScan Tx Hash |
 | :--- | :---: | :---: | :--- |
+| **PEPE / USDT** | `BUY` | 320,541.76 PEPE | [`0xf34a44b8...3391`](https://testnet.bscscan.com/tx/0xf34a44b83fe9bd1a3e2dd715af88ec4c702fac4d3588a6adb6d7be5f14513391) |
 | **WIF / USDT** | `BUY` | 5.60 WIF | [`0x6919b492...b122`](https://testnet.bscscan.com/tx/0x6919b4927bb628c69ba6726b062ab22d829400f6b2983c3ff6abdff08c63b122) |
 | **BOME / USDT** | `BUY` | 1,357.55 BOME | [`0x3ab25a8f...7093`](https://testnet.bscscan.com/tx/0x3ab25a8f8f5ea95d8db3952ec251ed3aafded79771e783aea4f83f0f609a7093) |
 | **FET / USDT** | `BUY` | 5.65 FET | [`0x6dbec7e9...784c`](https://testnet.bscscan.com/tx/0x6dbec7e95899929a922dcb6a391261a9e43b202776ac500d5a9082314e83784c) |
