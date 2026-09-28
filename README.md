@@ -5,18 +5,60 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-Python_3.10+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Google Gemini AI](https://img.shields.io/badge/Google_Gemini-2.5_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 
-**VORIX** is an autonomous AI agent designed for **Indonesia Web3 Hackathon (AI Agents Track)**. It continuously scans crypto and meme tokens on BNB Chain, analyzes market sentiment using Google Gemini 2.5 Flash, dynamically sizes positions, and automatically executes DEX swap transactions on-chain via Web3.py.
+> **💡 One-Liner Pitch:**  
+> *"An autonomous Web3 AI agent on BNB Chain that safeguards and optimizes your crypto assets 24/7—so you can sleep soundly at 3 AM."*
+
+---
+
+## 📽️ Submission Quick Links
+
+- **🎥 Demo Video (2-4 Mins)**: [Watch Product Demo on YouTube / Loom](https://youtube.com) *(Update with your video link)*
+- **🌐 Live Web Application**: `http://localhost:3000` *(Or your Vercel deployment URL)*
+- **📦 GitHub Repository**: [https://github.com/Ariq04/projek-vorix](https://github.com/Ariq04/projek-vorix)
+
+---
+
+## 📜 Key Smart Contract & Wallet Addresses (BSC Testnet)
+
+| Component | Network | Contract / Address | Explorer Link |
+| :--- | :---: | :--- | :--- |
+| **PancakeSwap V2 Router** | BSC Testnet (97) | `0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3` | [BscScan](https://testnet.bscscan.com/address/0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3) |
+| **Wrapped BNB (WBNB)** | BSC Testnet (97) | `0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd` | [BscScan](https://testnet.bscscan.com/address/0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd) |
+| **Mock USDT Token** | BSC Testnet (97) | `0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684` | [BscScan](https://testnet.bscscan.com/address/0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684) |
+| **VORIX AI Agent Wallet** | BSC Testnet (97) | `0x1f7596a297921b3a165b4c194511d73a8111cc57` | [BscScan](https://testnet.bscscan.com/address/0x1f7596a297921b3a165b4c194511d73a8111cc57) |
+
+---
+
+## 🔄 User & Autonomous Agent Flow
+
+```
+ ┌────────────────┐     ┌────────────────┐     ┌────────────────┐     ┌────────────────┐
+ │ 1. Market Radar│ ──► │ 2. Gemini 2.5  │ ──► │ 3. Risk & Size │ ──► │ 4. On-Chain    │
+ │    Scanner     │     │    AI Reason   │     │    Calculator  │     │    DEX Swap    │
+ └────────────────┘     └────────────────┘     └────────────────┘     └───────┬────────┘
+                                                                              │
+                                                               ┌──────────────▼─────────┐
+                                                               │ 5. Real-Time Portfolio │
+                                                               │    & BscScan Audit     │
+                                                               └────────────────────────┘
+```
+
+1. **Market Radar Scanning**: VORIX worker continuously scans 200+ active crypto and meme tokens on BNB Chain.
+2. **Gemini 2.5 Flash Reasoning**: Quant data (RSI 14, Fibonacci 61.8%/78.6% levels, price action) is evaluated by LLM.
+3. **Risk & Position Management**: Auto-calculates 10–15% wallet allocation per trade while preserving a `0.001 tBNB` gas safety cushion.
+4. **On-Chain DEX Execution**: Directly signs and executes Web3 swap transactions on PancakeSwap V2 Router without user manual input.
+5. **Real-Time Audit & Tracking**: Syncs live holdings, floating PnL (%), and transaction hash links for 100% transparent verification.
 
 ---
 
 ## 🌟 Key Features
 
 1. **🤖 Autonomous AI Sentiment & Technical Analysis**
-   - Integrates Google Gemini 2.5 Flash to evaluate real-time token price action, volume surges, and social sentiment.
-   - Generates actionable trade confidence scores and directional signals (`BUY`, `SELL`, `HOLD`).
+   - Integrates Google Gemini 2.5 Flash to evaluate real-time token price action, volume surges, and market momentum.
+   - Generates actionable trade confidence scores (0-100) and directional signals (`BUY`, `SELL`, `HOLD`).
 
 2. **⚡ On-Chain DEX Trading Engine (BNB Chain Testnet)**
-   - Executes autonomous token swaps via PancakeSwap V2 Router (`0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3`).
+   - Executes autonomous token swaps via PancakeSwap V2 Router.
    - Automated gas management maintaining a minimum safety buffer of `0.001 tBNB` for non-stop execution.
 
 3. **🛡️ Dynamic Risk & Position Sizing**
@@ -30,27 +72,6 @@
 
 ---
 
-## 🏗️ Architecture Overview
-
-```
- ┌─────────────────────────────────────────────────────────┐
- │                   VORIX Web Dashboard                   │
- │       Next.js 15 + React 19 + TypeScript + Tailwind     │
- └────────────────────────────┬────────────────────────────┘
-                              │ Dynamic API REST / WebSocket
- ┌────────────────────────────▼────────────────────────────┐
- │                    VORIX FastAPI Engine                 │
- │       Python 3.10+ + Web3.py + Autonomous Worker        │
- └─────────────┬─────────────────────────────┬─────────────┘
-               │                             │
- ┌─────────────▼─────────────┐ ┌─────────────▼─────────────┐
- │    Google Gemini 2.5      │ │      BNB Smart Chain      │
- │  AI Reasoning & Analysis  │ │      Testnet (Chain 97)   │
- └───────────────────────────┘ └───────────────────────────┘
-```
-
----
-
 ## 🔗 Proven On-Chain Transactions (BNB Testnet)
 
 All trades executed by VORIX are verifiable on **BscScan Testnet**:
@@ -60,6 +81,20 @@ All trades executed by VORIX are verifiable on **BscScan Testnet**:
 | **WIF / USDT** | `BUY` | 5.60 WIF | [`0x6919b492...b122`](https://testnet.bscscan.com/tx/0x6919b4927bb628c69ba6726b062ab22d829400f6b2983c3ff6abdff08c63b122) |
 | **BOME / USDT** | `BUY` | 1,357.55 BOME | [`0x3ab25a8f...7093`](https://testnet.bscscan.com/tx/0x3ab25a8f8f5ea95d8db3952ec251ed3aafded79771e783aea4f83f0f609a7093) |
 | **FET / USDT** | `BUY` | 5.65 FET | [`0x6dbec7e9...784c`](https://testnet.bscscan.com/tx/0x6dbec7e95899929a922dcb6a391261a9e43b202776ac500d5a9082314e83784c) |
+
+---
+
+## 📈 Business Model & VC Monetization Roadmap
+
+### Revenue Streams (Monetization Strategy)
+1. **Performance Fee**: 1.5% success fee deducted only on net profitable AI trades.
+2. **Subscription Tier (SaaS)**: Premium AI Scanner tier offering sub-second radar scanning for institutional traders.
+3. **DEX Referral Rebate**: Volume-based fee sharing partnership with BNB Chain DEX protocols.
+
+### VC Roadmap (Future Vision)
+- **Q4 2026 (Account Abstraction)**: ERC-4337 non-custodial user vault integration (Web3Auth / Privy) for seamless multi-user onboarding.
+- **Q1 2027 (Decentralized AI Memory)**: BNB Greenfield integration to store AI model weights and historical trade memory verifiably on-chain.
+- **Q2 2027 (Scaling & Cross-Chain)**: Deployment on **opBNB Layer 2** for ultra-low latency & sub-cent gas execution.
 
 ---
 
@@ -76,7 +111,7 @@ All trades executed by VORIX are verifiable on **BscScan Testnet**:
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/your-username/projek-vorix.git
+git clone https://github.com/Ariq04/projek-vorix.git
 cd projek-vorix
 ```
 
