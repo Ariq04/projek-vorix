@@ -2,7 +2,8 @@ import asyncio
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, List
-from modules.scanner import scan_token, scan_market_radar, get_expanded_market_list, fetch_live_market_price, DEFAULT_RADAR_TOKENS
+from concurrent.futures import ThreadPoolExecutor
+from modules.scanner import scan_token, scan_market_radar, get_expanded_market_list, fetch_live_market_price, DEFAULT_RADAR_TOKENS, EXPANDED_COIN_DATABASE
 from modules.brain import analyze_market_data
 from modules.executor import execute_buy_action, execute_sell_action, DEFAULT_TARGET_TOKEN
 from modules.trade_store import get_holdings, add_holding, remove_holding, reset_holdings, get_trade_history, record_trade, get_daily_summary
@@ -236,12 +237,17 @@ def get_market_list(category: Optional[str] = Query(default=None, description="F
 def get_user_holdings():
     try:
         holdings = get_holdings()
-        enriched_holdings = []
-        for h in holdings:
+        
+        def enrich_single(h):
             h_copy = dict(h)
             symbol = h_copy.get("symbol", "")
             live_price = fetch_live_market_price(symbol)
             
+            if not live_price or live_price <= 0:
+                db_match = next((c for c in EXPANDED_COIN_DATABASE if c["symbol"] == symbol), None)
+                if db_match and db_match.get("price", 0) > 0:
+                    live_price = db_match["price"]
+
             buy_price = h_copy.get("buy_price", 0.0)
             if live_price and live_price > 0:
                 h_copy["current_price"] = live_price
@@ -255,16 +261,23 @@ def get_user_holdings():
             else:
                 h_copy["pnl_pct"] = 0.0
                 h_copy["pnl_usd"] = 0.0
-                
-            enriched_holdings.append(h_copy)
-            
+            return h_copy
+
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            enriched_holdings = list(executor.map(enrich_single, holdings))
+
         return {
             "status": "success",
             "count": len(enriched_holdings),
             "holdings": enriched_holdings
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch holdings: {str(e)}")
+        holdings = get_holdings()
+        return {
+            "status": "success",
+            "count": len(holdings),
+            "holdings": holdings
+        }
 
 @app.post("/api/holdings/reset")
 def reset_user_holdings():

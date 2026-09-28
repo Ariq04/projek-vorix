@@ -66,7 +66,7 @@ export default function PortfolioPage() {
   const fetchHoldings = async () => {
     setLoading(true);
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2500);
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
     try {
       const res = await fetch(`${BACKEND_URL}/api/holdings`, {
@@ -74,14 +74,11 @@ export default function PortfolioPage() {
       });
       clearTimeout(timeoutId);
       const data = await res.json();
-      if (data.status === "success" && Array.isArray(data.holdings)) {
+      if (data.status === "success" && Array.isArray(data.holdings) && data.holdings.length > 0) {
         setHoldings(data.holdings);
-      } else {
-        setHoldings([]);
       }
     } catch (err) {
       console.warn("Fetch holdings error:", err);
-      setHoldings([]);
     } finally {
       setLoading(false);
     }
