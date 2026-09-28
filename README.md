@@ -6,7 +6,7 @@
 [![Google Gemini AI](https://img.shields.io/badge/Google_Gemini-2.5_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 
 > **💡 One-Liner Pitch:**  
-> *"An agent can secure your assets while you sleep at 3am."*
+> *"VORIX is an autonomous Web3 AI agent on BNB Chain that continuously scans markets, executes zero-friction DEX trades, and safeguards your portfolio 24/7—so you can sleep soundly at 3 AM."*
 
 ---
 
