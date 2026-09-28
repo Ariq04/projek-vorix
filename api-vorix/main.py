@@ -236,10 +236,32 @@ def get_market_list(category: Optional[str] = Query(default=None, description="F
 def get_user_holdings():
     try:
         holdings = get_holdings()
+        enriched_holdings = []
+        for h in holdings:
+            h_copy = dict(h)
+            symbol = h_copy.get("symbol", "")
+            live_price = fetch_live_market_price(symbol)
+            
+            buy_price = h_copy.get("buy_price", 0.0)
+            if live_price and live_price > 0:
+                h_copy["current_price"] = live_price
+            else:
+                h_copy["current_price"] = buy_price
+                
+            current_price = h_copy["current_price"]
+            if buy_price > 0:
+                h_copy["pnl_pct"] = round(((current_price - buy_price) / buy_price) * 100, 2)
+                h_copy["pnl_usd"] = round((current_price - buy_price) * h_copy.get("amount", 0.0), 4)
+            else:
+                h_copy["pnl_pct"] = 0.0
+                h_copy["pnl_usd"] = 0.0
+                
+            enriched_holdings.append(h_copy)
+            
         return {
             "status": "success",
-            "count": len(holdings),
-            "holdings": holdings
+            "count": len(enriched_holdings),
+            "holdings": enriched_holdings
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch holdings: {str(e)}")

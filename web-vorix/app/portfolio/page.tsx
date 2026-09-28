@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { BACKEND_URL } from "@/config/api";
 import { 
   Wallet, 
   TrendingUp, 
@@ -21,6 +22,9 @@ interface Holding {
   contract_address: string;
   amount: number;
   buy_price: number;
+  current_price?: number;
+  pnl_pct?: number;
+  pnl_usd?: number;
   total_invested_bnb: number;
   buy_timestamp: string;
   auto_tp: boolean;
@@ -35,6 +39,8 @@ const DEFAULT_FALLBACK_HOLDING: Holding = {
   contract_address: "0xBa2aE424d960c26247Dd6c32edC70B295c744C43",
   amount: 150.0,
   buy_price: 0.385,
+  current_price: 0.385,
+  pnl_pct: 0.0,
   total_invested_bnb: 0.05,
   buy_timestamp: new Date().toISOString(),
   auto_tp: true,
@@ -60,10 +66,10 @@ export default function PortfolioPage() {
   const fetchHoldings = async () => {
     setLoading(true);
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1500);
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
 
     try {
-      const res = await fetch("http://localhost:8000/api/holdings", {
+      const res = await fetch(`${BACKEND_URL}/api/holdings`, {
         signal: controller.signal
       });
       clearTimeout(timeoutId);
@@ -84,7 +90,7 @@ export default function PortfolioPage() {
   const handleResetHoldings = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/holdings/reset", { method: "POST" });
+      const res = await fetch(`${BACKEND_URL}/api/holdings/reset`, { method: "POST" });
       const data = await res.json();
       if (data.status === "success") {
         setHoldings(data.holdings);
@@ -106,7 +112,7 @@ export default function PortfolioPage() {
     setSellingSymbol(symbol);
     setSellResult(null);
     try {
-      const res = await fetch(`http://localhost:8000/api/sell?symbol=${encodeURIComponent(symbol)}&pct=${pct}`);
+      const res = await fetch(`${BACKEND_URL}/api/sell?symbol=${encodeURIComponent(symbol)}&pct=${pct}`);
       const data = await res.json();
       setSellResult(data);
       // Update local state smoothly
@@ -118,11 +124,11 @@ export default function PortfolioPage() {
     }
   };
 
-  // Mock live current prices for PnL calculation
-  const getCurrentPrice = (symbol: string, buyPrice: number) => {
-    if (symbol.includes("DOGE")) return 0.442; // +14.8% profit
-    if (symbol.includes("BNB")) return 728.5; // +3.3% profit
-    return buyPrice * 1.08;
+  const getCurrentPrice = (h: Holding) => {
+    if (h.current_price !== undefined && h.current_price > 0) {
+      return h.current_price;
+    }
+    return h.buy_price;
   };
 
   return (
@@ -236,8 +242,8 @@ export default function PortfolioPage() {
                 </tr>
               ) : (
                 holdings.map((h) => {
-                  const currentPrice = getCurrentPrice(h.symbol, h.buy_price);
-                  const pnlPct = roundTwo(((currentPrice - h.buy_price) / h.buy_price) * 100);
+                  const currentPrice = getCurrentPrice(h);
+                  const pnlPct = h.pnl_pct !== undefined ? h.pnl_pct : roundTwo(((currentPrice - h.buy_price) / h.buy_price) * 100);
                   const isProfit = pnlPct >= 0;
                   const isSelling = sellingSymbol === h.symbol;
 
