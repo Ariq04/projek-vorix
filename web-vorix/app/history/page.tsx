@@ -87,6 +87,8 @@ const formatPrice = (price: number | undefined | null) => {
   return `$${price.toFixed(8)}`;
 };
 
+import { BACKEND_URL } from "@/config/api";
+
 export default function HistoryPage() {
   const [trades, setTrades] = useState<Trade[]>([]);
   const [summary, setSummary] = useState<Summary | null>(null);
@@ -96,10 +98,10 @@ export default function HistoryPage() {
   const fetchHistory = async () => {
     setLoading(true);
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1500);
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
 
     try {
-      const res = await fetch("http://localhost:8000/api/history", {
+      const res = await fetch(`${BACKEND_URL}/api/history`, {
         signal: controller.signal
       });
       clearTimeout(timeoutId);

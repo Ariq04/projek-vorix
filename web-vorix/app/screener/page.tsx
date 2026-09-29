@@ -84,7 +84,7 @@ interface RadarApiResponse {
   tokens: TokenScanResult[];
 }
 
-const BACKEND_URL = "http://localhost:8000";
+import { BACKEND_URL } from "@/config/api";
 
 const formatPrice = (price: number | undefined | null) => {
   if (price === undefined || price === null || price === 0) return "$0.00";
