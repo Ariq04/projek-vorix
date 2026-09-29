@@ -39,8 +39,8 @@ export default function Sidebar() {
       <div>
         {/* Brand Header */}
         <div className="flex items-center gap-3 px-3 py-4 mb-6 border-b border-slate-800/60">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 shadow-lg shadow-cyan-500/20">
-            <BrainCircuit className="w-6 h-6 text-white animate-pulse" />
+          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-slate-950 p-1 border border-slate-800/80 shadow-lg shadow-cyan-500/20">
+            <img src="/vorix-logo.png" alt="VORIX Logo" className="w-8 h-8 object-contain" />
           </div>
           <div>
             <h1 className="font-bold text-lg bg-gradient-to-r from-white via-slate-200 to-cyan-400 bg-clip-text text-transparent tracking-wide">

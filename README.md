@@ -1,4 +1,7 @@
-# 🚀 VORIX — Autonomous AI Agent Trading & Portfolio Manager on BNB Chain
+<div align="center">
+  <img src="web-vorix/public/vorix-logo.png" alt="VORIX Logo" width="200" />
+  <h1>🚀 VORIX — Autonomous AI Agent Trading & Portfolio Manager on BNB Chain</h1>
+</div>
 
 [![BNB Smart Chain](https://img.shields.io/badge/BNB_Chain-Testnet_ChainID_97-F3BA2F?style=for-the-badge&logo=binance&logoColor=black)](https://testnet.bscscan.com/)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
