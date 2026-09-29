@@ -12,8 +12,8 @@
 
 ## 📽️ Submission Quick Links
 
-- **🎥 Demo Video (2-4 Mins)**: [Watch Product Demo on YouTube / Loom](https://youtube.com) *(Update with your video link)*
-- **🌐 Live Web Application**: `http://localhost:3000` *(Or your Vercel deployment URL)*
+- **🎥 Demo Video (2-4 Mins)**: [Watch Product Demo on YouTube](https://youtu.be/aJDCzaMf-vo)
+- **🌐 Live Web Application**: [https://projek-vorix.vercel.app](https://projek-vorix.vercel.app)
 - **📦 GitHub Repository**: [https://github.com/Ariq04/projek-vorix](https://github.com/Ariq04/projek-vorix)
 
 ---
@@ -82,6 +82,7 @@ All trades executed by VORIX are verifiable on **BscScan Testnet**:
 | **WIF / USDT** | `BUY` | 5.60 WIF | [`0x6919b492...b122`](https://testnet.bscscan.com/tx/0x6919b4927bb628c69ba6726b062ab22d829400f6b2983c3ff6abdff08c63b122) |
 | **BOME / USDT** | `BUY` | 1,357.55 BOME | [`0x3ab25a8f...7093`](https://testnet.bscscan.com/tx/0x3ab25a8f8f5ea95d8db3952ec251ed3aafded79771e783aea4f83f0f609a7093) |
 | **FET / USDT** | `BUY` | 5.65 FET | [`0x6dbec7e9...784c`](https://testnet.bscscan.com/tx/0x6dbec7e95899929a922dcb6a391261a9e43b202776ac500d5a9082314e83784c) |
+| **USDT / BNB** | `SELL` | Instant Take-Profit | [`0x6e7f0641...5422`](https://testnet.bscscan.com/tx/0x6e7f064110406da9a94fa330a071badbbb2e05ee2b097ba16d6daf41941e5422) |
 
 ---
 
