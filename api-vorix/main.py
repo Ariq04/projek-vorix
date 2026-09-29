@@ -492,26 +492,44 @@ def analyze_and_execute(
 @app.get("/api/sell")
 def sell_token(
     symbol: str = Query(default="DOGE/USDT", description="Symbol of holding to sell"),
-    target_token: str = Query(default=DEFAULT_TARGET_TOKEN, description="Target token contract address on BSC Testnet"),
+    target_token: Optional[str] = Query(default=None, description="Target token contract address on BSC Testnet"),
     pct: float = Query(default=1.0, ge=0.1, le=1.0, description="Percentage of token balance to sell (1.0 = 100%)")
 ):
     try:
+        holdings = get_holdings()
+        target_holding = next((h for h in holdings if h.get("symbol") == symbol), None)
+        
+        contract_to_use = target_token
+        if not contract_to_use:
+            if target_holding and target_holding.get("contract_address"):
+                contract_to_use = target_holding.get("contract_address")
+            else:
+                contract_to_use = DEFAULT_TARGET_TOKEN
+
         sell_result = execute_sell_action(
             decision="STRONG_SELL",
-            target_token_address=target_token,
+            target_token_address=contract_to_use,
             amount_token_pct=pct
         )
         
         if sell_result.get("status") == "success":
+            live_price = fetch_live_market_price(symbol) or (target_holding.get("buy_price", 1.0) if target_holding else 1.0)
+            buy_price = target_holding.get("buy_price", live_price) if target_holding else live_price
+            amount_tokens = target_holding.get("amount", 100.0) if target_holding else 100.0
+            invested_bnb = target_holding.get("total_invested_bnb", 0.002) if target_holding else 0.002
+            
+            pnl_pct = round(((live_price - buy_price) / buy_price) * 100, 2) if buy_price > 0 else 0.0
+            pnl_usd = round(invested_bnb * 710.0 * (pnl_pct / 100.0), 2)
+
             remove_holding(symbol)
             record_trade({
                 "symbol": symbol,
                 "type": "SELL",
-                "price": 0.385 if "DOGE" in symbol else 710.20,
-                "amount": 150.0 if "DOGE" in symbol else 0.05,
-                "total_bnb": 0.052,
-                "pnl_usd": 14.20,
-                "pnl_pct": 12.4,
+                "price": live_price,
+                "amount": amount_tokens,
+                "total_bnb": invested_bnb,
+                "pnl_usd": pnl_usd,
+                "pnl_pct": pnl_pct,
                 "status": "COMPLETED",
                 "tx_hash": sell_result.get("tx_hash")
             })

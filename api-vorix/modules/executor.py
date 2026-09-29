@@ -54,6 +54,19 @@ ROUTER_ABI = [
         "outputs": [{"internalType": "uint256[]", "name": "amounts", "type": "uint256[]"}],
         "stateMutability": "nonpayable",
         "type": "function"
+    },
+    {
+        "inputs": [
+            {"internalType": "uint256", "name": "amountIn", "type": "uint256"},
+            {"internalType": "uint256", "name": "amountOutMin", "type": "uint256"},
+            {"internalType": "address[]", "name": "path", "type": "address[]"},
+            {"internalType": "address", "name": "to", "type": "address"},
+            {"internalType": "uint256", "name": "deadline", "type": "uint256"}
+        ],
+        "name": "swapExactTokensForETHSupportingFeeOnTransferTokens",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
     }
 ]
 
@@ -311,13 +324,13 @@ def execute_sell_action(
             w3.eth.wait_for_transaction_receipt(app_tx_hash, timeout=30)
             logger.info("Approve transaction confirmed on BSC Testnet!")
 
-        # 2. Build swapExactTokensForETH transaction
+        # 2. Build swapExactTokensForETHSupportingFeeOnTransferTokens transaction
         router_contract = w3.eth.contract(address=router_address, abi=ROUTER_ABI)
         path = [target_token, wbnb_token]
         deadline = int(time.time()) + 600
         nonce = w3.eth.get_transaction_count(wallet_address, 'pending')
 
-        sell_tx = router_contract.functions.swapExactTokensForETH(
+        sell_tx = router_contract.functions.swapExactTokensForETHSupportingFeeOnTransferTokens(
             sell_amount,
             0, # amountOutMin
             path,
@@ -325,7 +338,7 @@ def execute_sell_action(
             deadline
         ).build_transaction({
             'from': wallet_address,
-            'gas': 300000,
+            'gas': 350000,
             'gasPrice': w3.eth.gas_price,
             'nonce': nonce,
             'chainId': 97
