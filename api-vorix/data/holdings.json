@@ -6,37 +6,11 @@
     "amount": 323290.59,
     "buy_price": 0.00000438,
     "total_invested_bnb": 0.002,
-    "buy_timestamp": "2026-09-26T21:52:35.518373",
+    "buy_timestamp": "2026-09-29T18:49:46.000000",
     "auto_tp": true,
     "auto_sl": true,
     "tp_target": 0.00000504,
     "sl_target": 0.00000394
-  },
-  {
-    "symbol": "WIF/USDT",
-    "name": "WIF",
-    "contract_address": "0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684",
-    "amount": 5.61,
-    "buy_price": 0.2531,
-    "total_invested_bnb": 0.002,
-    "buy_timestamp": "2026-09-26T21:53:29.518373",
-    "auto_tp": true,
-    "auto_sl": true,
-    "tp_target": 0.2911,
-    "sl_target": 0.2278
-  },
-  {
-    "symbol": "FET/USDT",
-    "name": "FET",
-    "contract_address": "0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684",
-    "amount": 5.65,
-    "buy_price": 0.2513,
-    "total_invested_bnb": 0.002,
-    "buy_timestamp": "2026-09-26T21:53:42.518373",
-    "auto_tp": true,
-    "auto_sl": true,
-    "tp_target": 0.2890,
-    "sl_target": 0.2262
   },
   {
     "symbol": "BOME/USDT",
@@ -45,10 +19,36 @@
     "amount": 1357.55,
     "buy_price": 0.001041,
     "total_invested_bnb": 0.002,
-    "buy_timestamp": "2026-09-26T21:53:51.518373",
+    "buy_timestamp": "2026-09-29T18:49:46.000000",
     "auto_tp": true,
     "auto_sl": true,
     "tp_target": 0.001197,
     "sl_target": 0.000937
+  },
+  {
+    "symbol": "WIF/USDT",
+    "name": "WIF",
+    "contract_address": "0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684",
+    "amount": 5.94,
+    "buy_price": 0.2391,
+    "total_invested_bnb": 0.002,
+    "buy_timestamp": "2026-09-29T18:49:46.000000",
+    "auto_tp": true,
+    "auto_sl": true,
+    "tp_target": 0.2750,
+    "sl_target": 0.2152
+  },
+  {
+    "symbol": "FET/USDT",
+    "name": "FET",
+    "contract_address": "0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684",
+    "amount": 6.35,
+    "buy_price": 0.2237,
+    "total_invested_bnb": 0.002,
+    "buy_timestamp": "2026-09-29T18:49:46.000000",
+    "auto_tp": true,
+    "auto_sl": true,
+    "tp_target": 0.2573,
+    "sl_target": 0.2013
   }
 ]

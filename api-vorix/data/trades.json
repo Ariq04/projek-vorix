@@ -1,6 +1,34 @@
 [
   {
     "symbol": "FET/USDT",
+    "type": "BUY",
+    "price": 0.2237,
+    "amount": 6.35,
+    "total_bnb": 0.002,
+    "pnl_usd": 0.0,
+    "pnl_pct": 0.0,
+    "status": "COMPLETED",
+    "tx_hash": "0x6dbec7e95899929a922dcb6a391261a9e43b202776ac500d5a9082314e83784c",
+    "id": "tx_1790710188",
+    "date": "2026-09-29",
+    "timestamp": "2026-09-29T18:52:10.000000"
+  },
+  {
+    "symbol": "WIF/USDT",
+    "type": "BUY",
+    "price": 0.2391,
+    "amount": 5.94,
+    "total_bnb": 0.002,
+    "pnl_usd": 0.0,
+    "pnl_pct": 0.0,
+    "status": "COMPLETED",
+    "tx_hash": "0x0b058e2788acdbd97abc5b733f4c333015cae60250e1ba557582e0f940fe396f",
+    "id": "tx_1790710187",
+    "date": "2026-09-29",
+    "timestamp": "2026-09-29T18:51:30.000000"
+  },
+  {
+    "symbol": "FET/USDT",
     "type": "SELL",
     "price": 0.2288,
     "amount": 5.65,
