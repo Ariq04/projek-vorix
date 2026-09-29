@@ -212,17 +212,29 @@ def execute_buy_action(
         tx_hash_str = w3.to_hex(tx_hash_bytes)
         explorer_url = f"https://testnet.bscscan.com/tx/{tx_hash_str}"
         
-        logger.info(f"BUY transaction sent! TxHash: {tx_hash_str}")
+        logger.info(f"BUY transaction sent! TxHash: {tx_hash_str}. Waiting for receipt...")
+        receipt = w3.eth.wait_for_transaction_receipt(tx_hash_bytes, timeout=30)
         
-        return {
-            "status": "success",
-            "action": "BUY",
-            "reason": "Autonomous BUY swap successfully broadcast to BSC Testnet.",
-            "tx_hash": tx_hash_str,
-            "explorer_link": explorer_url,
-            "wallet_used": wallet_address,
-            "amount_bnb": amount_in_bnb
-        }
+        if receipt.get("status") == 1:
+            logger.info(f"BUY transaction CONFIRMED on-chain! TxHash: {tx_hash_str}")
+            return {
+                "status": "success",
+                "action": "BUY",
+                "reason": "Autonomous BUY swap successfully executed on BSC Testnet.",
+                "tx_hash": tx_hash_str,
+                "explorer_link": explorer_url,
+                "wallet_used": wallet_address,
+                "amount_bnb": amount_in_bnb
+            }
+        else:
+            logger.error(f"BUY transaction REVERTED on-chain! TxHash: {tx_hash_str}")
+            return {
+                "status": "failed",
+                "action": "BUY",
+                "reason": "On-chain execution reverted on BSC Testnet.",
+                "tx_hash": tx_hash_str,
+                "explorer_link": explorer_url
+            }
 
     except Exception as e:
         logger.error(f"Buy execution failed: {e}")
@@ -326,17 +338,29 @@ def execute_sell_action(
         tx_hash_str = w3.to_hex(tx_hash_bytes)
         explorer_url = f"https://testnet.bscscan.com/tx/{tx_hash_str}"
 
-        logger.info(f"SELL transaction successfully sent! TxHash: {tx_hash_str}")
+        logger.info(f"SELL transaction sent! TxHash: {tx_hash_str}. Waiting for receipt...")
+        receipt = w3.eth.wait_for_transaction_receipt(tx_hash_bytes, timeout=30)
 
-        return {
-            "status": "success",
-            "action": "SELL",
-            "reason": "Autonomous SELL / Take Profit swap successfully broadcast to BSC Testnet.",
-            "tx_hash": tx_hash_str,
-            "explorer_link": explorer_url,
-            "wallet_used": wallet_address,
-            "tokens_sold": sell_amount
-        }
+        if receipt.get("status") == 1:
+            logger.info(f"SELL transaction CONFIRMED on-chain! TxHash: {tx_hash_str}")
+            return {
+                "status": "success",
+                "action": "SELL",
+                "reason": "Autonomous SELL / Take Profit swap successfully executed on BSC Testnet.",
+                "tx_hash": tx_hash_str,
+                "explorer_link": explorer_url,
+                "wallet_used": wallet_address,
+                "tokens_sold": sell_amount
+            }
+        else:
+            logger.error(f"SELL transaction REVERTED on-chain! TxHash: {tx_hash_str}")
+            return {
+                "status": "failed",
+                "action": "SELL",
+                "reason": "On-chain execution reverted on BSC Testnet (TransferHelper::transferFrom failed).",
+                "tx_hash": tx_hash_str,
+                "explorer_link": explorer_url
+            }
 
     except Exception as e:
         logger.error(f"Sell execution failed: {e}")
