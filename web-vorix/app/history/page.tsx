@@ -109,9 +109,6 @@ export default function HistoryPage() {
       if (data.status === "success" && Array.isArray(data.trades)) {
         setTrades(data.trades.length > 0 ? data.trades : DEFAULT_FALLBACK_TRADES);
         setSummary(data.summary || DEFAULT_FALLBACK_SUMMARY);
-        if (data.summary && data.summary.today_date) {
-          setSelectedDate(data.summary.today_date);
-        }
       } else {
         setTrades(DEFAULT_FALLBACK_TRADES);
         setSummary(DEFAULT_FALLBACK_SUMMARY);
