@@ -156,23 +156,23 @@ def execute_buy_action(
         balance_wei = w3.eth.get_balance(wallet_address)
         balance_bnb = float(w3.from_wei(balance_wei, 'ether'))
         
-        # Reserve gas fee buffer (0.001 tBNB for gas)
-        gas_buffer_bnb = 0.001
+        # Reserve gas fee buffer (0.0005 tBNB for gas)
+        gas_buffer_bnb = 0.0005
         usable_bnb = max(0.0, balance_bnb - gas_buffer_bnb)
         
         # Smart Dynamic Position Sizing: 10% to 15% of available free balance per trade!
-        dynamic_10pct = round(usable_bnb * 0.10, 4)
+        dynamic_10pct = round(usable_bnb * 0.10, 5)
         
         if balance_bnb < (amount_in_bnb + gas_buffer_bnb):
-            if usable_bnb >= 0.001:
-                # Automatically adapt to 10% of available balance (min 0.001 tBNB)
-                amount_in_bnb = max(0.001, dynamic_10pct)
+            if usable_bnb >= 0.0002:
+                # Automatically adapt to 10% of available balance (min 0.0002 tBNB)
+                amount_in_bnb = max(0.0002, dynamic_10pct)
                 value_in_wei = w3.to_wei(amount_in_bnb, 'ether')
                 logger.info(f"Dynamic Position Sizing Active: Adjusted buy amount to {amount_in_bnb} tBNB (10% of {balance_bnb:.5f} tBNB balance).")
             else:
                 return {
                     "status": "failed",
-                    "reason": f"Insufficient wallet balance ({balance_bnb:.5f} tBNB). Minimum required balance for trade + gas is 0.002 tBNB.",
+                    "reason": f"Insufficient wallet balance ({balance_bnb:.5f} tBNB). Minimum required balance for trade + gas is 0.0007 tBNB.",
                     "action": "BUY",
                     "tx_hash": None,
                     "explorer_link": None
