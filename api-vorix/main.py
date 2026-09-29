@@ -95,6 +95,28 @@ async def autonomous_background_scanner():
                                 if sym in held_symbols:
                                     held_symbols.remove(sym)
 
+                        # Stop Loss trigger condition (current price <= sl_target)
+                        elif live_p <= sl_p:
+                            pnl_pct = round(((live_p - buy_p) / buy_p) * 100, 2)
+                            add_log("AUTO_SL", f"Mengevaluasi {sym}: Harga (${live_p}) menyentuh Limit Stop Loss (${sl_p}) ({pnl_pct}%)! Mengeksekusi Cut Loss Otonom...")
+                            sell_res = await asyncio.to_thread(execute_sell_action, decision="STRONG_SELL", target_token_address=target_contract, amount_token_pct=1.0)
+                            if sell_res.get("status") == "success":
+                                remove_holding(sym)
+                                record_trade({
+                                    "symbol": sym,
+                                    "type": "SELL",
+                                    "price": live_p,
+                                    "amount": h.get("amount", 0.0),
+                                    "total_bnb": h.get("total_invested_bnb", 0.002),
+                                    "pnl_usd": round(h.get("total_invested_bnb", 0.002) * 710.0 * (pnl_pct / 100.0), 2),
+                                    "pnl_pct": pnl_pct,
+                                    "status": "COMPLETED",
+                                    "tx_hash": sell_res.get("tx_hash")
+                                })
+                                add_log("EXECUTOR", f"Penjualan Cut Loss {sym} BERHASIL ({pnl_pct}%) di PancakeSwap Testnet! Tx: {str(sell_res.get('tx_hash'))[:16]}...", level="SUCCESS")
+                                if sym in held_symbols:
+                                    held_symbols.remove(sym)
+
                 # 2. Scan radar across 200+ coins for all STRONG_BUY candidates
                 radar_result = await asyncio.to_thread(scan_market_radar, timeframe="1h")
                 all_tokens = radar_result.get("tokens", [])
