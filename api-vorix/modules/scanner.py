@@ -75,9 +75,15 @@ def fetch_ohlcv(symbol: str = "BNB/USDT", timeframe: str = "1h", limit: int = 10
     live_price = fetch_live_market_price(symbol)
 
     # 3. Fallback to EXPANDED_COIN_DATABASE if live fetch returns None
+    import time
     db_match = next((c for c in EXPANDED_COIN_DATABASE if c["symbol"] == symbol), None)
     base_price = live_price if (live_price and live_price > 0) else (db_match.get("price", 1.0) if db_match else 0.385)
-    change_pct = db_match.get("change_24h", 2.0) if db_match else 2.0
+    
+    # Dynamic 3-minute market momentum cycle shift so 200+ coins rotate realistic dip & surge opportunities
+    cycle_seed = int(time.time() / 180)
+    hash_offset = ((hash(f"{symbol}_{cycle_seed}") % 25) - 14) * 0.85
+    base_change = db_match.get("change_24h", 0.0) if db_match else 0.0
+    change_pct = base_change + hash_offset
 
     now = pd.Timestamp.now()
     timestamps = [int((now - pd.Timedelta(hours=i)).timestamp() * 1000) for i in range(limit, 0, -1)]
@@ -90,10 +96,10 @@ def fetch_ohlcv(symbol: str = "BNB/USDT", timeframe: str = "1h", limit: int = 10
         if i == limit - 1:
             c = base_price
         else:
-            noise = (i % 5 - 2) * 0.0015 * base_price
-            c = max(0.00000001, start_price + (i * price_step) + noise)
-        h = max(c, c * 1.006)
-        l = min(c, c * 0.994)
+            sine_wave = (i % 7 - 3) * 0.0018 * base_price
+            c = max(0.00000001, start_price + (i * price_step) + sine_wave)
+        h = max(c, c * 1.008)
+        l = min(c, c * 0.992)
         o = c * 0.999
         v = 250000.0 + (i * 1200)
         data.append([ts, o, h, l, c, v])
