@@ -1,4 +1,12 @@
+import os
+import sys
 import asyncio
+
+# Ensure api-vorix directory is in sys.path regardless of execution root
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, List

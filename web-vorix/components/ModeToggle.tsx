@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Hand, Bot, Sparkles, CheckCircle2 } from "lucide-react";
+import { BACKEND_URL } from "@/config/api";
 
 export default function ModeToggle() {
   const [mode, setMode] = useState<"MANUAL" | "FULL_CONTROL_AI">("MANUAL");
@@ -10,7 +11,7 @@ export default function ModeToggle() {
 
   const fetchCurrentMode = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/mode");
+      const res = await fetch(`${BACKEND_URL}/api/mode`);
       const data = await res.json();
       if (data && data.mode) {
         setMode(data.mode);
@@ -29,7 +30,7 @@ export default function ModeToggle() {
     setMode(nextMode); // Optimistic instant toggle update
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/mode?mode=" + nextMode, {
+      const res = await fetch(`${BACKEND_URL}/api/mode?mode=${nextMode}`, {
         method: "POST"
       });
       const data = await res.json();
