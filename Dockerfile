@@ -1,16 +1,16 @@
 FROM python:3.10-slim
 
+ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
-# Copy requirements and install dependencies
+# Install backend dependencies
 COPY api-vorix/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend application files
-COPY api-vorix/ ./api-vorix/
+# Copy backend source (main.py + modules/) into /app
+COPY api-vorix/ ./
 
-# Expose default port
 EXPOSE 8000
 
-# Start FastAPI server using shell expansion for Railway $PORT
-CMD ["sh", "-c", "exec uvicorn api-vorix.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Railway injects $PORT; fallback 8000 for local docker
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
